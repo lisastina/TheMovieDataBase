@@ -12,7 +12,7 @@ const movieCard = ({ data }) => {
 
   const savedMovies = localStorageMovies;
 
-  const handleClick = async () => {
+  const handleClick = () => {
     if (data.type === "movie") {
       /* if there are more than 10 movies in the array, remove the last one */
       if (savedMovies.length >= 10) {

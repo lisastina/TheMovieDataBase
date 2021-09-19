@@ -13,7 +13,6 @@ const useLocalStorage = (key, defaultValue = []) => {
     }
 
     localStorage.setItem(key, JSON.stringify(value));
-    console.log("key:", key, JSON.stringify(value));
   }, [value]);
 
   return [value, setValue];
