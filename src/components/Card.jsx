@@ -7,7 +7,7 @@ const movieCard = ({ data }) => {
   const history = useHistory();
   const [localStorageMovies, setLocalStorageMovies] = useLocalStorage(
     "LastVisitedMovies",
-    ""
+    []
   );
 
   const savedMovies = localStorageMovies;
@@ -19,9 +19,7 @@ const movieCard = ({ data }) => {
         savedMovies.pop();
       }
       /* Check if movie is already in array */
-      if (
-        !savedMovies.filter((movie) => movie.title === data.title).length > 0
-      ) {
+      if (!savedMovies.some((movie) => movie.title === data.title)) {
         /* save the movie in localStorage */
         savedMovies.unshift(data);
         // setLocalStorageMovies(savedMovies);
