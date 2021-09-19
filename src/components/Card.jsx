@@ -34,7 +34,7 @@ const movieCard = ({ data }) => {
   return (
     <>
       {data && (
-        <Card style={{ cursor: "pointer" }} onClick={handleClick}>
+        <Card className="card" onClick={handleClick}>
           {data.img && (
             <Card.Img
               variant="top"
