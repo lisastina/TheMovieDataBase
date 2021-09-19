@@ -22,7 +22,7 @@ const movieCard = ({ data }) => {
       if (
         !savedMovies.filter((movie) => movie.title === data.title).length > 0
       ) {
-        /* save the movie in  */
+        /* save the movie in localStorage */
         savedMovies.unshift(data);
         // setLocalStorageMovies(savedMovies);
         localStorage.setItem("LastVisitedMovies", JSON.stringify(savedMovies));
@@ -30,12 +30,7 @@ const movieCard = ({ data }) => {
     }
     history.push(`/${data.type}/${data.id}`);
   };
-  /* 
-  useEffect(() => {
-    console.log(savedMovies);
-    setLocalStorageMovies(savedMovies);
-  }, [savedMovies]);
- */
+
   return (
     <>
       {data && (
