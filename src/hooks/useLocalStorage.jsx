@@ -1,21 +1,29 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-const useLocalStorage = (key, defaultValue = []) => {
-  const [value, setValue] = useState(() => {
-    const jsonValue = localStorage.getItem(key);
+export const useLocalStorage = (key, initialValue) => {
+  const [storedValue, setStoredValue] = useState(() => {
+    try {
+      const jsonValue = localStorage.getItem(key);
 
-    return jsonValue ? JSON.parse(jsonValue) : defaultValue;
-  });
-
-  useEffect(() => {
-    if (typeof value === "undefined") {
-      return;
+      return jsonValue ? JSON.parse(jsonValue) : initialValue;
+    } catch (error) {
+      console.log(error);
+      return initialValue;
     }
+  });
+  const setValue = (value) => {
+    try {
+      const valueToStore =
+        value instanceof Function ? value(storedValue) : value;
 
-    localStorage.setItem(key, JSON.stringify(value));
-  }, [value]);
+      setStoredValue(valueToStore);
+      localStorage.setItem(key, JSON.stringify(valueToStore));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  return [value, setValue];
+  return [storedValue, setValue];
 };
 
 export default useLocalStorage;
