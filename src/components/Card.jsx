@@ -1,38 +1,25 @@
 import React, { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import { useHistory } from "react-router";
-import useLocalStorage from "../hooks/useLocalStorage";
+import { Link } from "react-router-dom";
+// import useLocalStorage from "../hooks/useLocalStorage";
 
 const movieCard = ({ data }) => {
   const history = useHistory();
-  const [localStorageMovies, setLocalStorageMovies] = useLocalStorage(
-    "LastVisitedMovies",
-    []
-  );
+  // const [localStorageMovies, setLocalStorageMovies] = useLocalStorage(
+  //   "LastVisitedMovies",
+  //   []
+  // );
 
-  const savedMovies = localStorageMovies;
-
-  const handleClick = () => {
-    if (data.type === "movie") {
-      /* if there are more than 10 movies in the array, remove the last one */
-      if (savedMovies.length >= 10) {
-        savedMovies.pop();
-      }
-      /* Check if movie is already in array */
-      if (!savedMovies.some((movie) => movie.title === data.title)) {
-        /* save the movie in localStorage */
-        savedMovies.unshift(data);
-        // setLocalStorageMovies(savedMovies);
-        localStorage.setItem("LastVisitedMovies", JSON.stringify(savedMovies));
-      }
-    }
-    history.push(`/${data.type}/${data.id}`);
-  };
+  // const savedMovies = localStorageMovies;
 
   return (
-    <>
+    <Link
+      to={`/${data.type}/${data.id}`}
+      style={{ textDecoration: "none", color: "black" }}
+    >
       {data && (
-        <Card className="card" onClick={handleClick}>
+        <Card className="card">
           {data.img && (
             <Card.Img
               variant="top"
@@ -46,7 +33,7 @@ const movieCard = ({ data }) => {
           </Card.Body>
         </Card>
       )}
-    </>
+    </Link>
   );
 };
 
