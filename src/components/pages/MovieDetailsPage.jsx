@@ -25,6 +25,7 @@ const MovieDetailsPage = () => {
 
   useEffect(() => {
     if (movie) {
+      console.log(localStorageMovies);
       /* Are there not any saved movies, save current movie  */
       if (!savedMovies.length) {
         savedMovies.unshift(movie);
