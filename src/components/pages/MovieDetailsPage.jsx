@@ -21,13 +21,14 @@ const MovieDetailsPage = () => {
   const [localStorageMovies, setLocalStorageMovies] =
     useLocalStorage("LastVisitedMovies");
 
-  const savedMovies = localStorageMovies;
+  let savedMovies = localStorageMovies;
 
   useEffect(() => {
     if (movie) {
       console.log(localStorageMovies);
       /* Are there not any saved movies, save current movie  */
       if (!savedMovies.length) {
+        savedMovies = [];
         savedMovies.unshift(movie);
       } else {
         /*  If the movie is already in the array, remove it and unshift it to appear first in the list */
