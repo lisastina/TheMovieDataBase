@@ -6,7 +6,7 @@ import useLocalStorage from "../hooks/useLocalStorage";
 const LastVisitedMovies = () => {
   const [localStorageMovies, setLocalStorageMovies] = useLocalStorage(
     "LastVisitedMovies",
-    ""
+    []
   );
 
   return (
@@ -25,7 +25,7 @@ const LastVisitedMovies = () => {
               <Card
                 data={{
                   type: "movie",
-                  img: movie.img,
+                  img: movie.poster_path,
                   title: movie.title,
                   id: movie.id,
                 }}
