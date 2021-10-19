@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import { getSingleMovie } from "../../services/movieAPI";
 import Card from "../Card";
 import SimilarMovies from "../SimilarMovies";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
@@ -17,6 +18,38 @@ const MovieDetailsPage = () => {
   } = useQuery(["singleMovie", movieId], () => {
     return getSingleMovie(movieId);
   });
+  const [localStorageMovies, setLocalStorageMovies] =
+    useLocalStorage("LastVisitedMovies");
+
+  const savedMovies = localStorageMovies;
+
+  useEffect(() => {
+    if (movie) {
+      /* Are there not any saved movies, save current movie  */
+      if (!savedMovies.length) {
+        savedMovies.unshift(movie);
+      } else {
+        /*  If the movie is already in the array, remove it and unshift it to appear first in the list */
+        if (savedMovies.some((savedMovie) => savedMovie.id === movie.id)) {
+          let index = savedMovies.findIndex((i) => i.id === movie.id);
+          if (index > -1) {
+            savedMovies.splice(index, 1);
+            savedMovies.unshift(movie);
+          }
+        } else {
+          /* check if there are 10 movies */
+          if (savedMovies.length >= 10) {
+            /* If 10, remove last movie */
+            savedMovies.pop();
+          }
+          /* Add movie in beginning of list */
+          savedMovies.unshift(movie);
+        }
+      }
+      /* Update local storage with new movie-list */
+      setLocalStorageMovies(savedMovies);
+    }
+  }, [movie]);
 
   return (
     <Container>
