@@ -7,10 +7,12 @@ import MoviePage from "./components/pages/MoviePage";
 import MovieDetailsPage from "./components/pages/MovieDetailsPage";
 import ActorPage from "./components/pages/ActorPage";
 import LastVisitedMovies from "./components/LastVisitedMovies";
+import ScrollToTop from "./util/ScrollToTop";
 
 function App() {
   return (
     <div>
+      <ScrollToTop />
       <Navbar />
 
       <Switch>
